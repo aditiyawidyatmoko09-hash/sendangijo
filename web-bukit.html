@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Wisata: Bukit Widodaren Sendang Ijo</title>
+    <style>
+        /* Tombol Google Maps */
+        .btn-maps {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4285F4; 
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-top: 25px;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+            width: 100%; 
+            max-width: 400px; 
+        }
+
+        .btn-maps:hover {
+            background-color: #3367D6;
+            transform: translateY(-3px);
+        }
+
+        .btn-maps svg {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        :root {
+            --primary: #2c3e50; 
+            --secondary: #34495e;
+            --bg-light: #f5f6fa;
+            --text-dark: #2f3542;
+            --accent: #e67e22; /* Warna senja */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header Specific Tour */
+        .tour-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(80, 44, 46, 0)), url('bukit-widodadaren.png') center/cover;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .tour-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .tour-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Container & Tabs */
+        .container {
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--primary);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            border-top: 4px solid var(--accent);
+        }
+
+        /* Content Area */
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .tab-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Interaktif Accordion */
+        .accordion {
+            background-color: #f1f2f6;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .active-acc, .accordion:hover {
+            background-color: #dfe4ea;
+        }
+
+        .accordion::after {
+            content: '\002B'; 
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .active-acc::after {
+            content: '\2212'; 
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-left: 3px solid var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .panel p {
+            margin: 15px 0;
+        }
+
+        /* Galeri Interaktif */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Lightbox Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 85%;
+            max-height: 85vh;
+            border-radius: 5px;
+            animation: zoom 0.3s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: var(--accent);
+        }
+
+        /* Tombol Kembali (Back Button) */
+        .btn-back {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.15); 
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 100; 
+        }
+
+        .btn-back:hover {
+            background-color: white;
+            color: var(--primary);
+            transform: translateX(-5px); 
+        }
+
+        .btn-back svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            margin-right: 8px;
+        }
+
+        /* Responsif untuk layar HP */
+        @media (max-width: 768px) {
+            .btn-back {
+                top: 20px;
+                left: 20px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn-back">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Kembali ke Beranda
+    </a>
+
+    <header class="tour-header">
+        <h1>Bukit Widodaren</h1>
+        <p>Spot berburu senja terbaik di atas miniatur Ranu Kumbolo (Telaga Claket), Desa Sendang Ijo, Wonogiri.</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'Deskripsi')">Tentang Bukit</button>
+            <button class="tab-btn" onclick="openTab(event, 'Fasilitas')">Panduan & Rute</button>
+            <button class="tab-btn" onclick="openTab(event, 'Galeri')">Visual Lanskap</button>
+        </div>
+
+        <div id="Deskripsi" class="tab-content active">
+            <h2>Pesona Ketinggian Wonogiri</h2>
+            <p>Bukit Widodaren terletak tepat di sebelah barat <strong>Telaga Claket</strong>, Desa Sendang Ijo, Kecamatan Selogiri, Kabupaten Wonogiri. Bukit dengan ketinggian kurang dari 200 mdpl ini menjadi magnet bagi para pemburu senja (*sunset hunters*).</p>
+            <p>Dari puncaknya, pengunjung akan disuguhkan pemandangan Telaga Claket di bawahnya yang menyerupai Ranu Kumbolo. Jika cuaca sedang cerah, deretan Gunung Lawu di sisi timur, serta Gunung Merapi dan Merbabu di sisi barat akan terlihat memanjakan mata.</p>
+        </div>
+
+        <div id="Fasilitas" class="tab-content">
+            <h2>Informasi Penting Sebelum Naik</h2>
+            <p>Pahami detail rute dan persiapan berikut agar pendakian singkat lu aman dan nyaman:</p>
+            
+            <button class="accordion">Akses, Parkir & Tiket</button>
+            <div class="panel">
+                <p>Kendaraan pengunjung tidak bisa naik ke bukit, melainkan harus diparkir di area <strong>Telaga Claket</strong>. Harga tiket masuk kawasan sekitar Rp 10.000/orang, dengan tarif parkir motor Rp 2.000 dan mobil Rp 5.000.</p>
+            </div>
+
+            <button class="accordion">Trek Pendakian & Waktu Tempuh</button>
+            <div class="panel">
+                <p>Dari lokasi parkir, lu harus berjalan kaki menyusuri jalan setapak di utara bukit (samping Jalan Claket). Waktu tempuh ke puncak hanya <strong>15 hingga 30 menit</strong>. Jalurnya cukup ramah, namun saat mendekati puncak, trek didominasi bebatuan yang cukup menanjak tapi solid (tidak mudah longsor).</p>
+            </div>
+
+            <button class="accordion">Aturan & Tips Berkunjung</button>
+            <div class="panel">
+                <p><strong>Dilarang Kemping:</strong> Area puncak memanjang dan terdiri dari bebatuan sempit, sehingga sangat tidak direkomendasikan untuk mendirikan tenda.<br>
+                <strong>Bawa Senter:</strong> Jika lu turun setelah *sunset*, pastikan bawa senter karena kondisi akan sangat gelap dengan cepat.<br>
+                <strong>Bawa Turun Sampah:</strong> Jaga keasrian alam dengan tidak meninggalkan sampah sekecil apa pun di puncak.</p>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://maps.google.com/?q=Bukit+Widodaren+Sendang+Ijo+Wonogiri" target="_blank" class="btn-maps" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Buka Titik Lokasi di Google Maps
+                </a>
+            </div>
+        </div>
+
+        <div id="Galeri" class="tab-content">
+            <h2>Cuplikan Suasana</h2>
+            <p>Klik gambar untuk melihat lebih jelas.</p>
+            <div class="gallery-grid">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Pemandangan Bukit" onclick="openModal(this.src)">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Suasana Telaga" onclick="openModal(this.src)">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1495344517868-8ebaf0a2044e?auto=format&fit=crop&w=600&q=80" alt="Momen Sunset" onclick="openModal(this.src)">
+            </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script>
+        // Logika Interaktif Tabs
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            // Timeout kecil untuk trigger animasi CSS
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10);
+            evt.currentTarget.className += " active";
+        }
+
+        // Logika Interaktif Accordion
+        let acc = document.getElementsByClassName("accordion");
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-acc");
+                let panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+
+        // Logika Interaktif Modal Lightbox
+        let modal = document.getElementById("imageModal");
+        let modalImg = document.getElementById("img01");
+
+        function openModal(src) {
+            modal.style.display = "block";
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Tutup modal kalau user klik di luar gambar
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

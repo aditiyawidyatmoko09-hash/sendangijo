@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direktori Wisata Sendangijo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary-text: #1c1e21;
+            --secondary-text: #606770;
+            --accent-color: #2E7D32;
+            --hover-color: #e8f5e9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* Header Portal Mandiri */
+        .portal-header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .portal-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .portal-header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-text);
+            margin-bottom: 8px;
+        }
+
+        .portal-header p {
+            color: var(--secondary-text);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .location-badge {
+            display: inline-block;
+            background-color: var(--hover-color);
+            color: var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Container Direktori */
+        .directory-list {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Card List Tunggal */
+        .dir-card {
+            display: flex;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dir-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .dir-card img {
+            width: 150px;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        .dir-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .dir-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 6px;
+            color: var(--primary-text);
+        }
+
+        .dir-tags {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dir-content p {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        /* TAMBAHAN BARU: Informasi Meta (Harga, Lokasi, Jam) */
+        .dir-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+        }
+
+        .dir-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dir-meta i {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .action-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .dir-card:hover .action-icon {
+            color: var(--accent-color);
+        }
+
+        /* Tombol Kembali ke Web Utama */
+        .btn-back-home {
+            margin-top: 50px;
+            padding: 12px 25px;
+            background-color: transparent;
+            color: var(--secondary-text);
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-back-home:hover {
+            background-color: var(--secondary-text);
+            color: white;
+            border-color: var(--secondary-text);
+        }
+
+        @media (max-width: 480px) {
+            .dir-card { flex-direction: column; }
+            .dir-card img { width: 100%; height: 180px; }
+            .action-icon { display: none; }
+            .dir-meta { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="portal-header">
+        <img src="telaga-clekat.png" alt="Logo Sendangijo">
+        <h1>Katalog Wisata Sendangijo</h1>
+        <p>Pilih destinasi liburan Anda selanjutnya di kawasan asri kami.</p>
+        <div class="location-badge"><i class="fas fa-map-marker-alt"></i> Selogiri, Wonogiri</div>
+    </header>
+
+    <main class="directory-list">
+        
+        <a href="telaga-clekat.html" class="dir-card">
+            <img src="telaga-clekat.png" alt="Telaga Claket">
+            <div class="dir-content">
+                <span class="dir-tags">Wisata Air & Alam</span>
+                <h2>Telaga Claket</h2>
+                <p>Suasana tenang dengan lanskap perbukitan hijau, replika Ranu Kumbolo di Wonogiri.</p>
+                <div class="dir-meta">
+                    <span><i class="fas fa-ticket-alt"></i> Rp 10.000 / Orang</span>
+                    <span><i class="fas fa-clock"></i> 06.00 - 17.00 WIB</span>
+                    <span><i class="fas fa-map-pin"></i> Jl. Claket, Sendangijo</span>
+                </div>
+            </div>
+            <div class="action-icon"><i class="fas fa-chevron-right"></i></div>
+        </a>
+
+        <a href="web-bukit.html" class="dir-card">
+            <img src="bukit-widodadaren.png" alt="Bukit Widodaren">
+            <div class="dir-content">
+                <span class="dir-tags">Trekking Ringan</span>
+                <h2>Bukit Widodaren</h2>
+                <p>Nikmati pemandangan telaga dari ketinggian dengan jalur pendakian yang ramah keluarga.</p>
+                <div class="dir-meta">
+                    <span><i class="fas fa-ticket-alt"></i> Rp 5.000 / Orang</span>
+                    <span><i class="fas fa-mountain"></i> Elevasi: ±200 mdpl</span>
+                    <span><i class="fas fa-map-pin"></i> Samping Telaga Claket</span>
+                </div>
+            </div>
+            <div class="action-icon"><i class="fas fa-chevron-right"></i></div>
+        </a>
+
+        <a href="#" class="dir-card">
+            <img src="bardi-farm.png" alt="Bimardi Farm">
+            <div class="dir-content">
+                <span class="dir-tags">Taman & Edukasi</span>
+                <h2>Bimardi Farm & Park</h2>
+                <p>Rekreasi taman bunga dan spot foto menarik dengan udara sejuk pedesaan.</p>
+                <div class="dir-meta">
+                    <span><i class="fas fa-ticket-alt"></i> Rp 10.000 / Orang</span>
+                    <span><i class="fas fa-clock"></i> 08.00 - 16.30 WIB</span>
+                    <span><i class="fas fa-map-pin"></i> Area Bukit Kodok</span>
+                </div>
+            </div>
+            <div class="action-icon"><i class="fas fa-chevron-right"></i></div>
+        </a>
+
+    </main>
+
+    <a href="index.html" class="btn-back-home"><i class="fas fa-home"></i> Kembali ke Web Utama</a>
+
+</body>
+</html>
